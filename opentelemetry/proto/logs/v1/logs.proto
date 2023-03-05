@@ -35,6 +35,7 @@ option go_package = "go.opentelemetry.io/proto/otlp/logs/v1";
 //
 // When new fields are added into this message, the OTLP request MUST be updated
 // as well.
+// 日志数据
 message LogsData {
   // An array of ResourceLogs.
   // For data coming from a single resource this array will typically contain
@@ -45,18 +46,22 @@ message LogsData {
 }
 
 // A collection of ScopeLogs from a Resource.
+// 资源日志
 message ResourceLogs {
   reserved 1000;
 
   // The resource for the logs in this message.
   // If this field is not set then resource info is unknown.
+  // 资源
   opentelemetry.proto.resource.v1.Resource resource = 1;
 
   // A list of ScopeLogs that originate from a resource.
+  // 域日志
   repeated ScopeLogs scope_logs = 2;
 
   // This schema_url applies to the data in the "resource" field. It does not apply
   // to the data in the "scope_logs" field which have their own schema_url field.
+  // 
   string schema_url = 3;
 }
 
@@ -65,9 +70,11 @@ message ScopeLogs {
   // The instrumentation scope information for the logs in this message.
   // Semantically when InstrumentationScope isn't set, it is equivalent with
   // an empty instrumentation scope name (unknown).
+  // 域
   opentelemetry.proto.common.v1.InstrumentationScope scope = 1;
 
   // A list of log records.
+  // 日志记录
   repeated LogRecord log_records = 2;
 
   // This schema_url applies to all logs in the "logs" field.
@@ -105,6 +112,7 @@ enum SeverityNumber {
 }
 
 // Masks for LogRecord.flags field.
+// 日志标志
 enum LogRecordFlags {
   LOG_RECORD_FLAG_UNSPECIFIED = 0;
   LOG_RECORD_FLAG_TRACE_FLAGS_MASK = 0x000000FF;
@@ -112,6 +120,7 @@ enum LogRecordFlags {
 
 // A log record according to OpenTelemetry Log Data Model:
 // https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md
+// 日志记录
 message LogRecord {
   reserved 4;
 
